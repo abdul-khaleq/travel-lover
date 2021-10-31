@@ -8,52 +8,23 @@ import useAuth from '../../hooks/useAuth';
 import './Booking.css'
 
 const Booking = () => {
-
-
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const onSubmit = data => {
     console.log(data);
-    // axios.post('http://localhost:5000/services', data)
-    // .then(res =>{
-    //     if(res.data.insertedId){
-    //         alert('added successful');
-    //         reset();
-    //     }
-    // })
   };
-
-
-
 
     const {_id} = useParams();
     // console.log(_id)
     const [details , setDetails] = useState([]);
     useEffect(()=>{
-        fetch('http://localhost:5000/services')
+        fetch('https://thawing-peak-73051.herokuapp.com/services')
         .then(res => res.json())
         .then(data => setDetails(data))
     },[])
     const bookDetail = details.filter(detail => detail._id === _id);
-    console.log(bookDetail)
+    // console.log(bookDetail)
     const { user} = useAuth();
-    console.log(user)
-
-
-    const handleDelete = id =>{
-      const url =`http://localhost:5000/services/${id}`;
-      fetch(url, {
-          method: 'DELETE'
-      })
-      .then(res =>res.json())
-      .then(data =>{
-          // console.log(data)
-          // if(data.deletedCount){
-          //     alert('Deleted')
-          //     const remaining = services.filter(service => service._id !== id);
-          // setServices(remaining)
-          // } 
-      })
-  }
+    // console.log(user)
     return (
         <div className="">
            <Container className='py-5'>
@@ -68,41 +39,19 @@ const Booking = () => {
     {bookDetail[0]?.description}
           </Card.Text>
         </Card.Body>
-        {/* <button className="btn btn-danger" onClick={handleDelete}>Delete</button>  */}
+        <button className="btn btn-danger">Delete</button> 
       </Card>
             </Col>
              <Col>
-                <h2>Form</h2>
-    <Form>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Control type="name" placeholder="Name" value={user.displayName} />
-  </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Control type="email" placeholder="Email" value={user.email}/>
-  </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Control type="number" placeholder="Phone number"/>
-  </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-  <Form.Control placeholder="Your address" />
-  </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-  <Form.Control as="textarea" placeholder="Leave a comment here" />
-  </Form.Group>
-  
-  <Button className="btn btn-primary" variant="primary" type="submit">Submit</Button>
-</Form>
-
-
-{/* <h2>Add a service</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("name", { required: true, maxLength: 20 })} placeholder="name" value={user.displayName}/>
-      <input {...register("email", { required: true, maxLength: 20 })} placeholder="name" value={user.email}/>
+<div className="add-services">
+<form onSubmit={handleSubmit(onSubmit)}>
+      <input  id="name" {...register("name", { required: true, maxLength: 20 })}  value={user.displayName}/>
+      <input {...register("email", { required: true, maxLength: 20 })} value={user.email}/>
       <input {...register("address", { required: true, maxLength: 20 })} placeholder="Address"/>
-      <input type="number" {...register("phone")} placeholder="Phone number"/>
-      <textarea {...register("description")} placeholder="description"/>
-      <input type="submit" />
-    </form> */}
+      <input type="number" {...register("number", { required: true, maxLength: 20 })} placeholder="Phone number"/>
+      <input className="btn btn-primary" type="submit" />
+    </form>
+</div>
             </Col>
                 </Row>
             </Container>

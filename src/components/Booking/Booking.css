@@ -1,10 +1,10 @@
-/* .add-service form {
+.add-services form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-} */
-/* .add-service form input, textarea{
-    width: 100%;
+}
+.add-services form input{
     margin-bottom: 10px;
-} */
+    width: 100%;
+}
